@@ -1,22 +1,36 @@
 const canvas = document.getElementById("jsCanvas");
+const ctx = canvas.getContext("2d");
+canvas.height = 700;
+canvas.width = 700;
+ctx.lineWidth = 2.5;
+ctx.strokeStyle = "#2c2c2c";
 let painting = false;
 function onMouseMove(e) {
   x = e.offsetX;
   y = e.offsetY;
+  if (painting) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  } else {
+
+  }
 }
 function onMouseDown(e) {
-  painting = true;
-}
-function onMouseUp(e) {
-  stopPainting();
+  startPainting();
 }
 
 function stopPainting() {
   painting = false;
 }
+
+function startPainting() {
+  painting = true;
+}
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", onMouseDown);
-  canvas.addEventListener("mouseup", onMouseUp);
+  canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
 }
